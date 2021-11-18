@@ -29,6 +29,7 @@ app.get('/geoDB/:minPopulation', (request, response) => {
             }
    })
    .then(externalResponse => {
+     console.log(externalResponse)
     response.send(externalResponse)
   })
 })
@@ -37,6 +38,7 @@ app.get('/wiki/:fetchQuery', (request,response) => {
   const fetchQuery = request.params.fetchQuery
   fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${fetchQuery}`)
   .then(externalResponse => {
+    console.log(externalResponse)
     response.send(externalResponse)
   })
 })
@@ -48,6 +50,7 @@ app.get('/walkScores/:city/:state/:lat/:lon', (request, response) => {
   const longitude = request.params.lon
   fetch(`https://api.walkscore.com/score?format=json&address=${city}%20${state}&lat=${latitude}&lon=${longitude}&transit=1&bike=1&wsapikey=${s3.walkScoreKey}`)
   .then(externalResponse => {
+    console.log(externalResponse)
     response.send(externalResponse)
   })
 })
