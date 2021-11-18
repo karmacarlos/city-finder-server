@@ -7,19 +7,19 @@ app.use(express.json())
 import dotenv from 'dotenv'
 dotenv.config()
 import fetch from 'node-fetch'
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 
-const corsOptions = {
-  origin: ' http://localhost:3000/',
-  optionsSuccessStatus: 200
-}
+// const corsOptions = {
+//   origin: 'http://localhost:3000/',
+//   optionsSuccessStatus: 200
+// }
 
 const geoDBkey = process.env.GEODB_KEY;
 const walkScoreKey = process.env.WALKSCORE_KEY;
 
-app.get('/geoDB/:minPopulation', cors(corsOptions), (request, response) => {
+app.get('/geoDB/:minPopulation', cors(), (request, response) => {
   const minPopulation = request.params.minPopulation
-   fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=20&countryIds=Q30&minPopulation=${minPopulation}`, {
+   return fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=20&countryIds=Q30&minPopulation=${minPopulation}`, {
             "method": "GET",
             "headers": {
               "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
@@ -27,6 +27,7 @@ app.get('/geoDB/:minPopulation', cors(corsOptions), (request, response) => {
             }
    })
    .then(externalResponse => {
+     console.log(externalResponse)
     if (!externalResponse.ok) {
       throw new Error(`Status: ${externalResponse.status} message: ${externalResponse.statusText}`)
     }
@@ -36,7 +37,7 @@ app.get('/geoDB/:minPopulation', cors(corsOptions), (request, response) => {
   .catch(error => response.send( { error: error } ))
 })
 
-app.get('/wiki/:fetchQuery', cors(corsOptions), (request,response) => {
+app.get('/wiki/:fetchQuery', cors(), (request,response) => {
   const fetchQuery = request.params.fetchQuery
   fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${fetchQuery}`)
   .then(externalResponse => {
@@ -49,7 +50,7 @@ app.get('/wiki/:fetchQuery', cors(corsOptions), (request,response) => {
   .catch(error => response.send( { error } ))
 })
 
-app.get('/walkScores/:city/:state/:lat/:lon', cors(corsOptions), (request, response) => {
+app.get('/walkScores/:city/:state/:lat/:lon', cors(), (request, response) => {
   const city = request.params.city
   const state = request.params.state
   const latitude = request.params.lat
