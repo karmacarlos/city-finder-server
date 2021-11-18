@@ -9,10 +9,15 @@ dotenv.config()
 import fetch from 'node-fetch'
 app.set('port', process.env.PORT || 3000);
 
+const corsOptions = {
+  origin: ' http://localhost:3000',
+  optionsSuccessStatus: 200
+}
+
 const geoDBkey = process.env.GEODB_KEY;
 const walkScoreKey = process.env.WALKSCORE_KEY;
 
-app.get('/geoDB/:minPopulation', cors(), (request, response) => {
+app.get('/geoDB/:minPopulation', cors(corsOptions), (request, response) => {
   const minPopulation = request.params.minPopulation
    fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=20&countryIds=Q30&minPopulation=${minPopulation}`, {
             "method": "GET",
@@ -31,7 +36,7 @@ app.get('/geoDB/:minPopulation', cors(), (request, response) => {
   .catch(error => response.send( { error: error } ))
 })
 
-app.get('/wiki/:fetchQuery', cors(), (request,response) => {
+app.get('/wiki/:fetchQuery', cors(corsOptions), (request,response) => {
   const fetchQuery = request.params.fetchQuery
   fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${fetchQuery}`)
   .then(externalResponse => {
@@ -44,7 +49,7 @@ app.get('/wiki/:fetchQuery', cors(), (request,response) => {
   .catch(error => response.send( { error } ))
 })
 
-app.get('/walkScores/:city/:state/:lat/:lon', cors(), (request, response) => {
+app.get('/walkScores/:city/:state/:lat/:lon', cors(corsOptions), (request, response) => {
   const city = request.params.city
   const state = request.params.state
   const latitude = request.params.lat
