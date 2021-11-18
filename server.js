@@ -12,7 +12,7 @@ app.set('port', process.env.PORT || 3001);
 const geoDBkey = process.env.GEODB_KEY;
 const walkScoreKey = process.env.WALKSCORE_KEY;
 
-app.get('/geoDB/:minPopulation', (request, response) => {
+app.get('/geoDB/:minPopulation', cors(), (request, response) => {
   const minPopulation = request.params.minPopulation
    fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=20&countryIds=Q30&minPopulation=${minPopulation}`, {
             "method": "GET",
