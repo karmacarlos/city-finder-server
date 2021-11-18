@@ -19,7 +19,7 @@ const walkScoreKey = process.env.WALKSCORE_KEY;
 
 app.get('/geoDB/:minPopulation', cors(), (request, response) => {
   const minPopulation = request.params.minPopulation
-   return fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=20&countryIds=Q30&minPopulation=${minPopulation}`, {
+    fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=20&countryIds=Q30&minPopulation=${minPopulation}`, {
             "method": "GET",
             "headers": {
               "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
@@ -27,14 +27,16 @@ app.get('/geoDB/:minPopulation', cors(), (request, response) => {
             }
    })
    .then(externalResponse => {
-     console.log(externalResponse)
-    if (!externalResponse.ok) {
-      throw new Error(`Status: ${externalResponse.status} message: ${externalResponse.statusText}`)
-    }
-    return externalResponse.json()
+    response.send(externalResponse)
   })
-  .then(data => response.status(200).json(data))
-  .catch(error => response.send( { error: error } ))
+  //  .then(externalResponse => {
+  //   if (!externalResponse.ok) {
+  //     throw new Error(`Status: ${externalResponse.status} message: ${externalResponse.statusText}`)
+  //   }
+  //   return externalResponse.json()
+  // })
+  // .then(data => response.status(200).json(data))
+  // .catch(error => response.send( { error: error } ))
 })
 
 app.get('/wiki/:fetchQuery', cors(), (request,response) => {
