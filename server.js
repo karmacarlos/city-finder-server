@@ -7,7 +7,7 @@ app.use(express.json())
 import dotenv from 'dotenv'
 dotenv.config()
 import fetch from 'node-fetch'
-app.set('port', process.env.PORT || 3001);
+app.set('port', process.env.PORT || 3000);
 
 const geoDBkey = process.env.GEODB_KEY;
 const walkScoreKey = process.env.WALKSCORE_KEY;
@@ -31,7 +31,7 @@ app.get('/geoDB/:minPopulation', cors(), (request, response) => {
   .catch(error => response.send( { error: error } ))
 })
 
-app.get('/wiki/:fetchQuery', (request,response) => {
+app.get('/wiki/:fetchQuery', cors(), (request,response) => {
   const fetchQuery = request.params.fetchQuery
   fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${fetchQuery}`)
   .then(externalResponse => {
@@ -44,7 +44,7 @@ app.get('/wiki/:fetchQuery', (request,response) => {
   .catch(error => response.send( { error } ))
 })
 
-app.get('/walkScores/:city/:state/:lat/:lon', (request, response) => {
+app.get('/walkScores/:city/:state/:lat/:lon', cors(), (request, response) => {
   const city = request.params.city
   const state = request.params.state
   const latitude = request.params.lat
