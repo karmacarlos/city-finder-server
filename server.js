@@ -10,7 +10,7 @@ import fetch from 'node-fetch'
 app.set('port', process.env.PORT || 3000);
 
 const corsOptions = {
-  origin: ' http://localhost:3000',
+  origin: ' http://localhost:3000/',
   optionsSuccessStatus: 200
 }
 
