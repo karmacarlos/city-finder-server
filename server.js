@@ -1,14 +1,16 @@
 import express from 'express'
 const app = express()
-const cors = require('cors')
-// import cors from 'cors'
+import cors from 'cors'
 app.use(cors())
 app.use(express.json())
 import dotenv from 'dotenv'
 dotenv.config()
 import fetch from 'node-fetch'
+import process from 'process'
 app.set('port', process.env.PORT || 3001);
 
+const environment = process.env.NODE_ENV || 'development';
+console.log(process.env.NODE_ENV)
 const geoDBkey = process.env.GEODB_KEY;
 const walkScoreKey = process.env.WALKSCORE_KEY;
 
