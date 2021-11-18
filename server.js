@@ -18,6 +18,7 @@ let s3 = new aws.S3({
   geoDBkey: process.env.S3_geoDb,
   walkScoreKey: process.env.S3_walkScores
 })
+console.log(s3)
 
 app.get('/geoDB/:minPopulation', (request, response) => {
   const minPopulation = request.params.minPopulation
