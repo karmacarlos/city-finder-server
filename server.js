@@ -1,6 +1,7 @@
 import express from 'express'
 const app = express()
-const cors = require('cors')
+// const cors = require('cors')
+import cors from 'cors'
 app.use(cors())
 app.use(express.json())
 import dotenv from 'dotenv'
