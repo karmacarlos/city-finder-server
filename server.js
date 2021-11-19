@@ -55,7 +55,6 @@ app.get('/walkScores/:city/:state/:lat/:lon', async (req, res) => {
   const data = await fetchResponse.json()
 
   res.json(data)
-
 })
 
 app.listen(app.get('port'), () => {
