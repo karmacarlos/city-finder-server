@@ -10,6 +10,13 @@ import process from 'process'
 app.set('port', process.env.PORT || 3001);
 import * as AWS from 'aws-sdk'
 
+const checkResponse = (response, res) => {
+    if (!response.ok) {
+    throw new Error(`Status: ${response.status} message: ${response.statusText}`)
+    } else {
+      res.json(response)
+    }
+}
 
 app.get('/geoDB/:minPopulation', async (req, res) => {
   const minPopulation = req.params.minPopulation
@@ -23,16 +30,22 @@ app.get('/geoDB/:minPopulation', async (req, res) => {
     }
   }
    const fetchResponse = await fetch(url, options)
-   const data = await fetchResponse.json()
+    .then(response => checkResponse(response))
     .catch(error => {
-      console.error({
-        "message": "Oh no",
-        error: error
-      })
+      console.error(error)
+      res.json(error)
     })
-  console.log("RESPONSE: ", fetchResponse)
-  console.log("DATA: ", data)
-  res.json(data)
+
+  //  const data = await fetchResponse.json()
+  //   .catch(error => {
+  //     console.error({
+  //       "message": "Oh no",
+  //       error: error
+  //     })
+  //   })
+  // console.log("RESPONSE: ", fetchResponse)
+  // console.log("DATA: ", data)
+  // res.json(data)
     
    
   //  .then(externalResponse => {
