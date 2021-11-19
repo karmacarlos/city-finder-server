@@ -18,7 +18,7 @@ let s3 = new aws.S3({
   geoDBkey: process.env.S3_geoDb,
   walkScoreKey: process.env.S3_walkScores
 })
-console.log(s3)
+console.log('secret key',s3.geoDBkey)
 
 app.get('/geoDB/:minPopulation', (request, response) => {
   const minPopulation = request.params.minPopulation
@@ -26,7 +26,7 @@ app.get('/geoDB/:minPopulation', (request, response) => {
             "method": "GET",
             "headers": {
               "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
-              "x-rapidapi-key": `"${s3.geoDBkey}"`,
+              "x-rapidapi-key": JSON.stringify(s3.geoDBkey),
             }
    })
    .then(externalResponse => {
