@@ -11,28 +11,33 @@ app.set('port', process.env.PORT || 3001);
 import * as AWS from 'aws-sdk'
 
 
-console.log('***JSON process variable***', JSON.stringify(process.env.S3_GEO))
-
-// let s3 = new AWS.S3({
-//   accessKeyId: process.env.S3_GEO,
-//   secretAccessKey: process.env.S3_WALK
-// });
-
-// console.log('***AWS***', s3)
-
-app.get('/geoDB/:minPopulation', (request, response) => {
+app.get('/geoDB/:minPopulation', async, (re, res) => {
   const minPopulation = request.params.minPopulation
-    fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=20&countryIds=Q30&minPopulation=${minPopulation}`, {
-            "method": "GET",
-            "headers": {
-              "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
-              "x-rapidapi-key": process.env.S3_GEO
-            }
-   })
-   .then(externalResponse => {
-     console.log('external log',JSON.parse(externalResponse))
-    response.send(externalResponse)
-  })
+  console.log('geoDB endpoint')
+  const url = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=20&countryIds=Q30&minPopulation=${minPopulation}`
+  const options = {
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
+      "x-rapidapi-key": process.env.S3_GEO
+    }
+  }
+  const response = await fetch(url, options)
+    .then(res => res.json())
+    .catch(error => {
+      console.error({
+        "message": "Oh no",
+        error: error
+      })
+    })
+  console.log("RESPONSE: ", response)
+  res.json(response)
+    
+   
+  //  .then(externalResponse => {
+  //    console.log('external log',JSON.parse(externalResponse))
+  //   response.send(externalResponse)
+  // })
 })
 
 app.get('/wiki/:fetchQuery', (request,response) => {
