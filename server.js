@@ -10,16 +10,7 @@ import process from 'process'
 app.set('port', process.env.PORT || 3001);
 import aws from 'aws-sdk'
 
-
-// const geoDBkey = process.env.GEODB_KEY;
-// const walkScoreKey = process.env.WALKSCORE_KEY;
-let s4 = new aws.S3({
-  geoDBkey: process.env.S3_GEO,
-  walkScoreKey: process.env.S3_WALK
-})
-
 console.log('***process variable***', process.env.S3_GEO)
-console.log('secret key',s4.geoDBkey)
 
 app.get('/geoDB/:minPopulation', (request, response) => {
   const minPopulation = request.params.minPopulation
@@ -27,7 +18,7 @@ app.get('/geoDB/:minPopulation', (request, response) => {
             "method": "GET",
             "headers": {
               "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
-              "x-rapidapi-key": JSON.stringify(s4.geoDBkey),
+              "x-rapidapi-key": JSON.stringify(process.env.S3_GEO),
             }
    })
    .then(externalResponse => {
@@ -50,7 +41,7 @@ app.get('/walkScores/:city/:state/:lat/:lon', (request, response) => {
   const state = request.params.state
   const latitude = request.params.lat
   const longitude = request.params.lon
-  fetch(`https://api.walkscore.com/score?format=json&address=${city}%20${state}&lat=${latitude}&lon=${longitude}&transit=1&bike=1&wsapikey=${s4.walkScoreKey}`)
+  fetch(`https://api.walkscore.com/score?format=json&address=${city}%20${state}&lat=${latitude}&lon=${longitude}&transit=1&bike=1&wsapikey=${process.env.S3_WALK}`)
   .then(externalResponse => {
     console.log(externalResponse)
     response.send(externalResponse)
