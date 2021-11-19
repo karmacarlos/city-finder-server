@@ -10,7 +10,7 @@ import process from 'process'
 app.set('port', process.env.PORT || 3001);
 import aws from 'aws-sdk'
 
-console.log('***process variable***', process.env.S3_GEO)
+console.log('***JSON process variable***', JSON.stringify(process.env.S3_GEO))
 
 app.get('/geoDB/:minPopulation', (request, response) => {
   const minPopulation = request.params.minPopulation
