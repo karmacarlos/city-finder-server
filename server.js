@@ -10,17 +10,9 @@ import process from 'process'
 app.set('port', process.env.PORT || 3001);
 import * as AWS from 'aws-sdk'
 
-const checkResponse = (response, res) => {
-    if (!response.ok) {
-    throw new Error(`Status: ${response.status} message: ${response.statusText}`)
-    } else {
-      res.json(response)
-    }
-}
-
 app.get('/geoDB/:minPopulation', async (req, res) => {
   const minPopulation = req.params.minPopulation
-  console.log('geoDB endpoint')
+  
   const url = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=20&countryIds=Q30&minPopulation=${minPopulation}`
   const options = {
     "method": "GET",
@@ -32,32 +24,40 @@ app.get('/geoDB/:minPopulation', async (req, res) => {
    const fetchResponse = await fetch(url, options)
    const data = await fetchResponse.json() 
 
-  // console.log("RESPONSE: ", fetchResponse)
-  // console.log("DATA: ", data)
   res.json(data)
 })
 
-app.get('/wiki/:fetchQuery', (request,response) => {
+app.get('/wiki/:fetchQuery', async (req,res) => {
   const fetchQuery = request.params.fetchQuery
-  fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${fetchQuery}`)
-  .then(externalResponse => {
-    console.log(externalResponse)
-    response.send(externalResponse)
-  })
+  const options = {
+    "method": "GET"
+  }
+  const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${fetchQuery}`
+
+  const fetchResponse = await fetch(url, options)
+  const data = await fetchResponse.json()
+
+  res.json(data)
 })
 
-app.get('/walkScores/:city/:state/:lat/:lon', (request, response) => {
+app.get('/walkScores/:city/:state/:lat/:lon', async (request, response) => {
   const city = request.params.city
   const state = request.params.state
   const latitude = request.params.lat
   const longitude = request.params.lon
-  fetch(`https://api.walkscore.com/score?format=json&address=${city}%20${state}&lat=${latitude}&lon=${longitude}&transit=1&bike=1&wsapikey=${process.env.S3_WALK}`)
-  .then(externalResponse => {
-    console.log(externalResponse)
-    response.send(externalResponse)
-  })
+
+  const url = `https://api.walkscore.com/score?format=json&address=${city}%20${state}&lat=${latitude}&lon=${longitude}&transit=1&bike=1&wsapikey=${process.env.S3_WALK}`
+  const options = {
+    "method": "GET"
+  }
+
+  const fetchResponse = await fetch(url, options)
+  const data = await fetchResponse.json()
+
+  res.json(data)
+
 })
 
 app.listen(app.get('port'), () => {
-  console.log(`Environment api keys variables over on http://localhost:${app.get('port')}`)
+  console.log(`Server proxy over on http://localhost:${app.get('port')}`)
 })
