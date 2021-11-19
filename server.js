@@ -8,8 +8,9 @@ dotenv.config()
 import fetch from 'node-fetch'
 import process from 'process'
 app.set('port', process.env.PORT || 3001);
-import aws from 'aws-sdk'
+import * as AWS from 'aws-sdk'
 
+console.log('***AWS***',AWS)
 console.log('***JSON process variable***', JSON.stringify(process.env.S3_GEO))
 
 app.get('/geoDB/:minPopulation', (request, response) => {
