@@ -11,8 +11,8 @@ app.set('port', process.env.PORT || 3001);
 import * as AWS from 'aws-sdk'
 
 
-app.get('/geoDB/:minPopulation', async, (re, res) => {
-  const minPopulation = request.params.minPopulation
+app.get('/geoDB/:minPopulation', async, (req, res) => {
+  const minPopulation = req.params.minPopulation
   console.log('geoDB endpoint')
   const url = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=20&countryIds=Q30&minPopulation=${minPopulation}`
   const options = {
