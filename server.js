@@ -13,12 +13,12 @@ import * as AWS from 'aws-sdk'
 
 console.log('***JSON process variable***', JSON.stringify(process.env.S3_GEO))
 
-let s3 = new AWS.S3({
-  accessKeyId: process.env.S3_GEO,
-  secretAccessKey: process.env.S3_WALK
-});
+// let s3 = new AWS.S3({
+//   accessKeyId: process.env.S3_GEO,
+//   secretAccessKey: process.env.S3_WALK
+// });
 
-console.log('***AWS***', s3)
+// console.log('***AWS***', s3)
 
 app.get('/geoDB/:minPopulation', (request, response) => {
   const minPopulation = request.params.minPopulation
@@ -26,7 +26,7 @@ app.get('/geoDB/:minPopulation', (request, response) => {
             "method": "GET",
             "headers": {
               "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
-              "x-rapidapi-key": `"${process.env.S3_GEO}"`
+              "x-rapidapi-key": JSON.stringify(process.env.S3_GEO)
             }
    })
    .then(externalResponse => {
