@@ -30,7 +30,7 @@ app.get('/geoDB/:minPopulation', (request, response) => {
             }
    })
    .then(externalResponse => {
-     console.log(externalResponse.json())
+     console.log('external log',JSON.parse(externalResponse))
     response.send(externalResponse)
   })
 })
