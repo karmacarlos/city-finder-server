@@ -2,7 +2,7 @@
 
 ## Server Description
 
-This server is intended to handle the API calls and hide the API keys for the City Finder application
+This server is intended to handle the API calls and hide the API keys for the [City Finder](https://city-finder-2107.herokuapp.com/) application
 
 ## Wins
 
