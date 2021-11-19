@@ -18,7 +18,7 @@ let s4 = new aws.S3({
   walkScoreKey: process.env.S3_WALK
 })
 
-console.log('process', process)
+console.log('***process variable***', process.env.S3_GEO)
 console.log('secret key',s4.geoDBkey)
 
 app.get('/geoDB/:minPopulation', (request, response) => {
