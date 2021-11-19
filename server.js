@@ -30,28 +30,11 @@ app.get('/geoDB/:minPopulation', async (req, res) => {
     }
   }
    const fetchResponse = await fetch(url, options)
-    .then(response => checkResponse(response))
-    .catch(error => {
-      console.error(error)
-      res.json(error)
-    })
+   const data = await fetchResponse.json() 
 
-  //  const data = await fetchResponse.json()
-  //   .catch(error => {
-  //     console.error({
-  //       "message": "Oh no",
-  //       error: error
-  //     })
-  //   })
   // console.log("RESPONSE: ", fetchResponse)
   // console.log("DATA: ", data)
-  // res.json(data)
-    
-   
-  //  .then(externalResponse => {
-  //    console.log('external log',JSON.parse(externalResponse))
-  //   response.send(externalResponse)
-  // })
+  res.json(data)
 })
 
 app.get('/wiki/:fetchQuery', (request,response) => {
