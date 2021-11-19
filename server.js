@@ -13,13 +13,13 @@ import aws from 'aws-sdk'
 
 // const geoDBkey = process.env.GEODB_KEY;
 // const walkScoreKey = process.env.WALKSCORE_KEY;
-console.log('process', process)
-console.log('secret key',s4.geoDBkey)
 let s4 = new aws.S4({
   geoDBkey: process.env.S4_GEO,
   walkScoreKey: process.env.S4_WALK
 })
 
+console.log('process', process)
+console.log('secret key',s4.geoDBkey)
 
 app.get('/geoDB/:minPopulation', (request, response) => {
   const minPopulation = request.params.minPopulation
