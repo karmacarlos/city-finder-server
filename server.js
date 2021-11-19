@@ -13,7 +13,7 @@ import * as AWS from 'aws-sdk'
 
 console.log('***JSON process variable***', JSON.stringify(process.env.S3_GEO))
 
-let s3 = new aws.S3({
+let s3 = new AWS.S3({
   accessKeyId: process.env.S3_GEO,
   secretAccessKey: process.env.S3_WALK
 });
