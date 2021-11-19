@@ -11,7 +11,7 @@ app.set('port', process.env.PORT || 3001);
 import * as AWS from 'aws-sdk'
 
 
-app.get('/geoDB/:minPopulation', async, (req, res) => {
+app.get('/geoDB/:minPopulation', async (req, res) => {
   const minPopulation = req.params.minPopulation
   console.log('geoDB endpoint')
   const url = `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=20&countryIds=Q30&minPopulation=${minPopulation}`
@@ -22,7 +22,7 @@ app.get('/geoDB/:minPopulation', async, (req, res) => {
       "x-rapidapi-key": process.env.S3_GEO
     }
   }
-   const externalResponse = await fetch(url, options)
+   const fetchResponse = await fetch(url, options)
     .then(res => res.json())
     .catch(error => {
       console.error({
@@ -30,8 +30,8 @@ app.get('/geoDB/:minPopulation', async, (req, res) => {
         error: error
       })
     })
-  console.log("RESPONSE: ", externalResponse)
-  res.json(externalResponse)
+  console.log("RESPONSE: ", fetchResponse)
+  res.json(fetchResponse)
     
    
   //  .then(externalResponse => {
