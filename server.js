@@ -23,7 +23,7 @@ app.get('/geoDB/:minPopulation', async (req, res) => {
     }
   }
    const fetchResponse = await fetch(url, options)
-    .then(res => res.json())
+   const data = await fetchResponse.json()
     .catch(error => {
       console.error({
         "message": "Oh no",
@@ -31,7 +31,8 @@ app.get('/geoDB/:minPopulation', async (req, res) => {
       })
     })
   console.log("RESPONSE: ", fetchResponse)
-  res.json(fetchResponse)
+  console.log("DATA: ", data)
+  res.json(data)
     
    
   //  .then(externalResponse => {
