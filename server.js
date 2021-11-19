@@ -26,7 +26,7 @@ app.get('/geoDB/:minPopulation', (request, response) => {
             "method": "GET",
             "headers": {
               "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
-              "x-rapidapi-key": `${s3.geoDBkey}`,
+              "x-rapidapi-key": `"${s3.geoDBkey}"`,
             }
    })
    .then(externalResponse => {
