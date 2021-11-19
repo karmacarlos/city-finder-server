@@ -13,9 +13,9 @@ import aws from 'aws-sdk'
 
 // const geoDBkey = process.env.GEODB_KEY;
 // const walkScoreKey = process.env.WALKSCORE_KEY;
-let s4 = new aws.S4({
-  geoDBkey: process.env.S4_GEO,
-  walkScoreKey: process.env.S4_WALK
+let s4 = new aws.S3({
+  geoDBkey: process.env.S3_GEO,
+  walkScoreKey: process.env.S3_WALK
 })
 
 console.log('process', process)
