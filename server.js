@@ -22,7 +22,7 @@ app.get('/geoDB/:minPopulation', async, (req, res) => {
       "x-rapidapi-key": process.env.S3_GEO
     }
   }
-  const response = await fetch(url, options)
+   response = await fetch(url, options)
     .then(res => res.json())
     .catch(error => {
       console.error({
