@@ -28,7 +28,7 @@ app.get('/geoDB/:minPopulation', async (req, res) => {
 })
 
 app.get('/wiki/:fetchQuery', async (req,res) => {
-  const fetchQuery = request.params.fetchQuery
+  const fetchQuery = req.params.fetchQuery
   const options = {
     "method": "GET"
   }
@@ -40,11 +40,11 @@ app.get('/wiki/:fetchQuery', async (req,res) => {
   res.json(data)
 })
 
-app.get('/walkScores/:city/:state/:lat/:lon', async (request, response) => {
-  const city = request.params.city
-  const state = request.params.state
-  const latitude = request.params.lat
-  const longitude = request.params.lon
+app.get('/walkScores/:city/:state/:lat/:lon', async (req, res) => {
+  const city = req.params.city
+  const state = req.params.state
+  const latitude = req.params.lat
+  const longitude = req.params.lon
 
   const url = `https://api.walkscore.com/score?format=json&address=${city}%20${state}&lat=${latitude}&lon=${longitude}&transit=1&bike=1&wsapikey=${process.env.S3_WALK}`
   const options = {
